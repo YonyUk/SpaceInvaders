@@ -4,6 +4,7 @@ using System.Collections;
 namespace Architecture{
 
 	public abstract class Ship: MonoBehaviour {
+		protected Vector3 shoot_direction { get; set; }
 		// Estructura de la nave
 		protected IShipStructure Specifications { get; set; }
 		// Activa el nitro
@@ -20,10 +21,13 @@ namespace Architecture{
 		}
 		// Dispara
 		protected virtual void Shoot(){
-			Specifications.Shooter.Shoot();
+			Specifications.Shooter.Shoot(shoot_direction);
 		}
-		protected virtual void Upgrade(IStructure modifier){
-			if (modifier.Structure == StructureType.Ship)
+		public virtual void Upgrade(IEquippable modifier){
+			if (modifier.StructTarget == StructureType.Ship && modifier.Mode == UpgradeMode.Replace) {
+				Specifications = (IShipStructure)modifier.Modifier;
+			}
+			else
 				Specifications.Upgrade (modifier);
 		}
 	}

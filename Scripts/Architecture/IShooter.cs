@@ -2,7 +2,7 @@
 using System.Collections;
 
 namespace Architecture{
-	public interface IShooter{
-		void Shoot();
+	public interface IShooter:IStructure{
+		void Shoot(Vector3 direction);
 	}
 }
